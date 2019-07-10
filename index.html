@@ -160,6 +160,81 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Django异常解决" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/python/2019/07/10/Django异常解决/">Django常见异常解决</a>
+    </h1>
+  
+
+        
+        <a href="/python/2019/07/10/Django异常解决/" class="archive-article-date">
+  	<time datetime="2019-07-10T15:14:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.RuntimeError: Model class <code>blog.models.Book</code> doesn’t declare an explicit app_label and isn’t in an application in <code>INSTALLED_APPS</code>.</p>
+<pre><code>1.请检查settings.py文件中INSTALLED_APPS是否配置正确
+INSTALLED_APPS = [
+    &apos;django.contrib.admin&apos;,
+    &apos;django.contrib.auth&apos;,
+    &apos;django.contrib.contenttypes&apos;,
+    &apos;django.contrib.sessions&apos;,
+    &apos;django.contrib.messages&apos;,
+    &apos;django.contrib.staticfiles&apos;,
+    &apos;blog&apos;,#记得添加你的app名称
+]
+2.检查导入包路径是否正确
+from blog.mvc.models import Book</code></pre>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/python/2019/07/10/Django异常解决/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-内置模块str常用用法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -184,8 +259,6 @@ var _hmt = _hmt || [];
 str2 = &quot;abd&quot;  
 
 if __name__ == &quot;__main__&quot;:
-    print(dir(str))
-    print(type(str1))
     print(str.lstrip(str1)) #去左边空格
     print(str.rstrip(str1)) #去右边空格
     print(str.strip(str1))  #去前后空格
