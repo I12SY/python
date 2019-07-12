@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="I12SY">
 <meta property="og:description" content="1.RuntimeError: Model class blog.models.Book doesn’t declare an explicit app_label and isn’t in an application in INSTALLED_APPS. 1.请检查settings.py文件中INSTALLED_APPS是否配置正确 INSTALLED_APPS = [     &amp;apos;d">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-11T15:32:26.596Z">
+<meta property="og:updated_time" content="2019-07-12T15:53:11.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django常见异常解决">
 <meta name="twitter:description" content="1.RuntimeError: Model class blog.models.Book doesn’t declare an explicit app_label and isn’t in an application in INSTALLED_APPS. 1.请检查settings.py文件中INSTALLED_APPS是否配置正确 INSTALLED_APPS = [     &amp;apos;d">
@@ -232,7 +232,30 @@ if query is not None:
 #改为
 if query is not None:
     query = query.encode(errors=&apos;replace&apos;)
-    return query</code></pre>
+    return query</code></pre><p>5.TypeError: __init__() missing 1 required positional argument: ‘on_delete’</p>
+<pre><code>在django2.0后，定义外键和一对一关系的时候需要加on_delete选项，此参数为了避免两个表里的数据不一致问题，不然会报错：
+TypeError: __init__() missing 1 required positional argument: &apos;on_delete&apos;
+
+将publisher = models.ForeignKey(Publisher)改为
+publisher = models.ForeignKey(Publisher,on_delete=models.CASCADE)
+
+具体参考 https://docs.djangoproject.com/en/2.0/ref/models/fields/#django.db.models.ForeignKey</code></pre><p>6.ImageField’s ‘upload_to’ argument must be a relative path, not an absolute path.</p>
+<pre><code>books.Author.headshot: (fields.E202) ImageField&apos;s &apos;upload_to&apos; argument must be a relative path, not an absolute path.
+    HINT: Remove the leading slash.
+books.Author.headshot: (fields.E210) Cannot use ImageField because Pillow is not installed.
+    HINT: Get Pillow at https://pypi.org/project/Pillow/ or run command &quot;pip install Pillow&quot;.
+
+执行pip install Pillow
+然后仍然会出现ImageField&apos;s &apos;upload_to&apos; argument must be a relative path, not an absolute path错误
+他这里需要的是一个相对路径
+所以需要将models.ImageField(upload_to=&apos;/tmp&apos;)
+改为models.ImageField(upload_to=&apos;tmp&apos;)</code></pre><p>7.django2.0+/Unknown command: ‘validate’、 Unknown command: ‘sqlall’、Unknown command: ‘syncdb’</p>
+<pre><code>这些语法在高版本中发生了变化了
+1.使用python manage.py check 替代 python manage.py validate
+2.使用python manage.py sqlmigrate books 0001 替代 python manage.py sqlall books
+如果出现CommandError: Cannot find a migration matching &apos;0001&apos; from app &apos;books&apos;. Is it in INSTALLED_APPS?错误
+先执行python manage.py makemigrations books，在执行python manage.py sqlmigrate books 0001
+3.使用python manage.py migrate 替代 python manage.py syncdb</code></pre>
       
 
       
